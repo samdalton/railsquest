@@ -86,7 +86,7 @@ post "/submit" do
     
     RestClient.post 'http://' + params[:hostname] + ':' + Railsquest.web_port.to_s + '/success', { :signature => signature, :quest_name => params[:quest_name] }         
     
-    redirect '/'
+    redirect '/' + params[:hostname]
 end
 
 post "/success" do
