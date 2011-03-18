@@ -85,11 +85,11 @@ post "/submit" do
     signature = Digest::SHA1.hexdigest params[:hostname] + params[:quest_name] + Railsquest.host_name + 'my secret'
     
     RestClient.post 'http://' + params[:hostname] + ':' + Railsquest.web_port.to_s + '/success', { :signature => signature, :quest_name => params[:quest_name] }         
-    json true
+    
+    redirect '/'
 end
 
 post "/success" do
    b = Railsquest::Badge.for_name(params[:quest_name])
    b.init!(params[:signature])
-   redirect '/'
 end

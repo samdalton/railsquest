@@ -222,7 +222,7 @@
         - for quest in @all_quests
           %li
             %h3
-              %a{:href => quest.uri + '?id=' + Railsquest.host_name , :target => '_blank'}= quest.name
+              %a{:href => quest.uri + '?hostname=' + Railsquest.host_name , :target => '_blank'}= quest.name
               
 - else
   .projects
@@ -244,4 +244,4 @@
         - for quest in @my_quests
           %li
             %h3
-              %a{:href => quest.uri + @adventurer , :target => '_blank'}= quest.name
+              %a{:href => quest.uri + '?hostname=' + @adventurer , :target => '_blank'}= quest.name
