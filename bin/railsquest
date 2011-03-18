@@ -8,8 +8,6 @@ require 'railsquest'
 Thread.abort_on_exception = true
 
 Railsquest.setup! if !Railsquest.setup?
-Railsquest.check_git!
-Railsquest.check_git_config!
 
 parent_process_pid = Process.pid
 pids = []
@@ -31,7 +29,7 @@ when nil
   Process.waitall
 
 when "add", "init"
-  repo = Railsquest.add!(ARGV[1])
+  repo = Railsquest.add!(ARGV[1], ARGV[2])
 
 when "remove", "rm"
   name = ARGV[1]

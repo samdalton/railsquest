@@ -7,8 +7,12 @@ module Railsquest
       attr_accessor :name, :url
       
     def self.for_name(name)
-      new(Railsquest.quests_path.join(name + ".quest"))
+        n = name.gsub(' ', '_')
+        q = new(Railsquest.quests_path.join(n + ".quest"))
+        q.name = n
+        q
     end
+    
     def self.html_id(name)
       name.gsub(/[^A-Za-z-]+/, '').downcase
     end
@@ -22,12 +26,13 @@ module Railsquest
     def exist?
       path.exist?
     end
-    # def init!
-    #   path.mkpath
-    #   Dir.chdir(path) { `git init --bare` }
-    # end
+    
+    def init!
+      Dir.chdir(Railsquest.quests_path) { `echo #{url} >> #{path}` }
+    end
+    
     def name
-      dirname.sub(".git",'')
+      dirname.sub(".quest",'')
     end
     def html_id
       self.class.html_id(name)

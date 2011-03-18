@@ -26,8 +26,7 @@ module Railsquest::Commands
   end
   
   def add!(url, name = nil)
-      
-      
+         
     if name.nil?
       default_name = "My Awesome Quest"
       print "Quest Name?".foreground(:yellow) + " [#{default_name}] "
@@ -42,18 +41,19 @@ module Railsquest::Commands
       abort "You've already a quest #{quest}."
     end
     
-    Dir.chdir(Railsquest.quests_path) { `echo #{quest.url} >> #{quest.path}` }
+    quest.init!
+    
     puts init_success_message(quest.dirname)
 
     quest
   end
   
   def init_success_message(quest_dirname)
-    plain_init_success_message(quest_dirname).gsub("git push quest master", "git push quest master".foreground(:yellow))
+    plain_init_success_message(quest_dirname)
   end
   
   def plain_init_success_message(quest_dirname)
-    "Railsquest quest #{quest_dirname} initialised and remote quest added.\nNext: git push quest master"
+    "Railsquest quest #{quest_dirname} created."
   end
   
   def clone!(url, clone_name)
