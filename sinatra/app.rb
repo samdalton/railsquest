@@ -79,13 +79,12 @@ get "/:quest.json" do
 end    
   
 post "/submit" do
+    #todo should only come from localhost
     puts params
-    if params[:success] == "true"
-        require 'digest/sha1'
-        signature = Digest::SHA1.hexdigest params[:user_id] + params["quest_name"] + 'my secret'
-        
-        RestClient.post 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success', { :signature => signature, :quest_name => params[:quest_name] }         
-    end
+    require 'digest/sha1'
+    signature = Digest::SHA1.hexdigest params[:hostname] + params[:quest_name] + Railsquest.host_name + 'my secret'
+    
+    RestClient.post 'http://' + params[:hostname] + ':' + Railsquest.web_port.to_s + '/success', { :signature => signature, :quest_name => params[:quest_name] }         
     json true
 end
 
