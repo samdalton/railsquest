@@ -60,19 +60,6 @@ get "/" do
   haml :home
 end
 
-get "/:quest/readme" do
-  @quest      = Railsquest::Quest.for_name(params[:quest])
-  readme_file      = @quest.readme_file
-  @rendered_readme = @quest.rendered_readme
-  @plain_readme    = readme_file.data
-  haml :readme
-end
-
-get "/:quest/:commit" do
-  @quest = Railsquest::Quest.for_name(params[:quest])
-  @commit     = @quest.grit_quest.commit(params[:commit])
-  haml :commit
-end
 
 get "/index.json" do
   json Railsquest.to_hash.to_json
@@ -82,22 +69,18 @@ get "/:quest.json" do
   response = Railsquest::Quest.for_name(params[:quest]).to_hash
   response["recent_commits"].map! { |c| c["committed_date_pretty"] = time_ago_in_words(Time.parse(c["committed_date"])).gsub("about ","") + " ago"; c }
   json response.to_json
-end
-    require 'net/http'
-    require 'uri'
+end    
+  
 post "/submit" do
     puts params
-
     if params[:success] == "true"
-        puts 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'
-        Net::HTTP.post_form(URI.parse('http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'), { :quest_name => params[:quest_name]})        
+        redirect 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success/' + params[:quest_name]            
     end
 
 end
 
-post "/success" do
-    puts 'success!'
+get "/success/:quest_name" do
    b = Railsquest::Badge.for_name(params[:quest_name])
    b.init!
-   puts b
+   redirect '/'
 end
