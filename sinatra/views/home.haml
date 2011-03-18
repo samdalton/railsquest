@@ -256,7 +256,7 @@
         - for quest in @all_quests
           %li
             %h3
-              %a{:href => quest.uri + '?id=' + Railsquest.host_name + '/submit'}= quest
+              %a{:href => quest.uri + '?id=' + Railsquest.host_name + ':' + Railsquest.web_port , :target => '_blank'}= quest.name
             / %ul
             /   - for repo in @all_quests[repo_name]
             /     %li

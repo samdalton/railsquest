@@ -90,7 +90,7 @@ post "/submit" do
 
     if params[:success] == "true"
         puts 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'
-        Net::HTTP.post_form(URI.parse('http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'), { :quest_name => 'dragons'})        
+        Net::HTTP.post_form(URI.parse('http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'), { :quest_name => params[:quest_name]})        
     end
 
 end

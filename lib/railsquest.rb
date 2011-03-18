@@ -88,7 +88,7 @@ module Railsquest
     end
 
     def quests
-      quests_path.children.map {|q| Quest.new(q)}
+      quests_path.children.map {|q| Quest.new(q) unless q.to_s =~ /DS_Store/ }
     end
     
     def quest(name)
@@ -96,7 +96,7 @@ module Railsquest
     end
     
     def badges
-       badges_path.children.map {|b| Badge.new(b)} 
+       badges_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|b| Badge.new(b) } 
     end
     
     def to_hash
