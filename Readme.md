@@ -1,25 +1,15 @@
-Railsquest - Local git publication and collaboration
-====================================================
+Railsquest - Propose and pursue quests for Ruby programming glory!
+==================================================================
 
-Via the [best reddit comment ever written](http://www.reddit.com/r/programming/comments/9txsd/git_bonjour_railsquest_version_22_released/c0efrxz):
+Pursue fame and glory by discovering and completing Quests, or offer a Quest to challenge your friends!
+As you complete Quests, your trophy page will slowly fill up with your achievement badges.
 
-> The logo is the fucking business. The mustache just bring[s] it to a whole
-> other level.
-
-Railsquest is local git quest hosting with a sexy web interface and Bonjour discovery. It's like a bunch of adhoc, local, network-aware githubs!
-
-Unlike Gitjour, the quests you're serving are not your working git quests, they're served from `~/.railsquest/quests`. You can push to your railsquest quests from your working copies just like you do with github.
-
-Follow [@railsquest](http://twitter.com/railsquest) on twitter for all release updates.
-
-![Screenshot of local view of Railsquest 2.1.3](http://cloud.github.com/downloads/toolmantim/railsquest/screenshot.png)
+Railsquest brings the magic of Bonjour auto-discovery to find Quests and other Challengers in your network.
 
 Installation and usage
 ----------------------
 
-You'll need at least [git version 1.6](http://git-scm.com/). Run `git --version` if you're unsure.
-
-Install it from [gemcutter](http://gemcutter.org/) via gems:
+Install it (from [gemcutter](http://gemcutter.org/)) via gems:
 
     gem install railsquest
 
@@ -29,29 +19,50 @@ Start it up:
 
     railsquest
 
-Go into an existing project and add it to railsquest:
+Then fire up [http://localhost:9876/](http://localhost:9876/) to begin your quest for the holy (g)rails!
 
-    cd ~/code/myproj
-    railsquest add
+Your name, as it will be seen by other people, is taken from your git global config setting.
 
-Publish your codez:
+You will see a list of all current adventurers, and a list of all available quests.
+You can inspect the badges that have been won by other adventurers, and visit the quests to try them yourself.
 
-    git push quest master
+How to create a quest
+---------------------
 
-Fire up [http://localhost:9331/](http://localhost:9331/) to check it out.
+Your quest is a web application running on your machine.
+You can run it on any port you choose.
+To make the quest available to other adventurers, add it to your railsquests:
 
-If somebody starts sharing a Railsquest quest with the same name on the
-network it'll automatically show up in the network thanks to the wonder that is Bonjour.
+railsquest add <port> "Name of your quest"
 
-For a list of all the commands:
+Specify the correct port number, and the name of your quest.
 
-    railsquest help
+An adventurer will commence your quest by browsing from their Railsquest page.
+Your quest application will receive a GET request with a "host" parameter.
+The host is the computer hostname of the challenger (again from the git global config).
+(TODO: We also need to make the adventurer's personal name available)
 
-Optional configuration: you can override the hostname by setting a global git config option like so:
+When you decide that an adventurer has completed your quest, you must notify
+your local Railsquest server of their success by posting two parameters to
 
-    git config --global railsquest.hostname foobar
+http://localhost:9876/submit
 
-If you set this setting, then railsquest will assume that you know precisely what you're doing, it will not append .local, it will not check this hostname is valid, or do anything to it.  If you set this, then you're on your own.
+The post must contain these two parameters:
+
+* The adventurer's "hostname"
+* The "quest_name"
+
+For example:
+
+  require 'rest-client'
+
+  RestClient.post 'http://localhost:9876/submit/', :hostname => hostname, :quest_name => 'My Funky Quest'
+
+Or using JQuery:
+
+  $.post('http://localhost:9876/submit/', {hostname: hostname, quest_name: 'My Funky Quest'});
+
+Railsquest will then sign these facts into an achievement badge that will be displayed on the adventurer's trophy page!
 
 Linux support
 -------------
@@ -81,13 +92,6 @@ If you kill railsquest with kill -9 it doesn't get a chance to unregister the Bo
 
 Note: You might have to restart the avahi-daemon sometimes if you are having problems seeing other railsquests.
 
-Official quest and support
--------------------------------
-
-The official quest and support issues/tickets live at [github.com/toolmantim/railsquest](http://github.com/toolmantim/railsquest).
-
-Feature and support discussions live at [groups.google.com/group/railsquest](http://groups.google.com/group/railsquest).
-
 Developing
 ----------
 
@@ -97,6 +101,11 @@ Developing
 Contributors
 ------------
 
+* [Sam Dalton](http://github.com/samdalton/)
+* [Michael Dowse](http://michaeldowse.name/)
+* [Clifford Heath](http://dataconstellation.com/)
+
+With blithe cribbage from bananajour by...
 * [Carla Hackett](http://carlahackettdesign.com/) (logo)
 * [Nathan de Vries](http://github.com/atnan)
 * [Lachlan Hardy](http://github.com/lachlanhardy)
@@ -119,4 +128,4 @@ All directories and files are MIT Licensed.
 
 Warning to all those who still believe secrecy will save their revenue stream
 -----------------------------------------------------------------------------
-Bananas were meant to be shared. There are no secret quests.
+Bananas were meant to be shared. There are no secret bananas.
