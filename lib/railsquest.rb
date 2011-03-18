@@ -2,6 +2,7 @@ libdir = File.dirname(__FILE__)
 $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'railsquest/quest'
+require 'railsquest/badge'
 require 'railsquest/grit_extensions'
 require 'railsquest/version'
 require 'railsquest/bonjour'
@@ -22,10 +23,12 @@ module Railsquest
     
     def setup?
       quests_path.exist?
+      badges_path.exist?
     end
     
     def setup!
       quests_path.mkpath
+      badges_path.mkpath
     end
     
     def path
@@ -34,6 +37,10 @@ module Railsquest
     
     def quests_path
       path + "quests"
+    end
+    
+    def badges_path
+      path + "badges"
     end
 
     def get_git_global_config(key)

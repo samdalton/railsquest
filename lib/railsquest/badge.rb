@@ -2,13 +2,13 @@ require 'grit'
 require 'pathname'
 
 module Railsquest
-  class Quest
+  class Badge
       
-      attr_accessor :name, :port
+      attr_accessor :name
       
     def self.for_name(name)
         n = name.gsub(' ', '_')
-        q = new(Railsquest.quests_path.join(n + ".quest"))
+        q = new(Railsquest.badges_path.join(n + ".badge"))
         q.name = n
         q
     end
@@ -28,7 +28,7 @@ module Railsquest
     end
     
     def init!
-      Dir.chdir(Railsquest.quests_path) { `echo #{port} >> #{path}` }
+      Dir.chdir(Railsquest.badges_path) { `echo 'success' >> #{path}` }
     end
     
     def uri
@@ -36,7 +36,7 @@ module Railsquest
     end
     
     def name
-      dirname.sub(".quest",'')
+      dirname.sub(".badge",'')
     end
     def html_id
       self.class.html_id(name)
@@ -57,9 +57,7 @@ module Railsquest
     end
     def to_hash
       {
-        "name" => name,
-        "url" => url,
-        "host_name" => Railsquest.host_name
+        "name" => name
       }
     end
   end

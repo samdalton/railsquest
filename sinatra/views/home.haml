@@ -192,7 +192,7 @@
       :color #fff
       :width 200px
 
-- if !local?
+- if local?
   :javascript
     $(function() {
       $("ul.network li").each(function() {
@@ -236,29 +236,31 @@
         To create a quest: 'railsquest add url_to_local_server'
 
   .projects
-    - if @other_repos_by_name.empty?
+    - if @people.empty?
       %h2 No Adventurers
     - else
-      %h2= pluralize @other_repos_by_name.length, "Adventurer", "Adventurers"
-      %ul
-        - for repo_name in @other_repos_by_name.keys.sort
-          %li
-            %h3&= repo_name
-            %ul
-              - for repo in @other_repos_by_name[repo_name].sort_by {|r| r.person.name}
-                %li
-                  %a{:href => repo.web_uri}&= repo.person.name
-  .people
-    - if @people.empty?
-      %h2 No quests
-    - else
-      %h2= pluralize @people.length, "Quest", "Quests"
+      %h2= pluralize @people.length, "Adventurer", "Adventurers"
       %ul
         - for person in @people
           %li
             %a{:href => person.uri}
               %img.gravatar{:src => person.gravatar}
-              %span.name&= person.name
+              %span.name&= person.name    
+
+  .people
+    - if @all_quests.empty?
+      %h2 No Quests
+    - else
+      %h2= pluralize @all_quests.length, "Quest", "Quests"
+      %ul
+        - for quest in @all_quests
+          %li
+            %h3
+              %a{:href => quest.uri + '?id=' + Railsquest.host_name + '&callback=http://' + Railsquest.host_name + ':' + Railsquest.web_port.to_s + '/submit'}= quest
+            / %ul
+            /   - for repo in @all_quests[repo_name]
+            /     %li
+            /       %a{:href => repo.web_uri}&= repo.person.name
               
               
 - else

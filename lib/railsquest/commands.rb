@@ -25,7 +25,7 @@ module Railsquest::Commands
     fork { Railsquest::Bonjour::Advertiser.new.go! }
   end
   
-  def add!(uri, name = nil)
+  def add!(port, name = nil)
          
     if name.nil?
       default_name = "My Awesome Quest"
@@ -35,7 +35,7 @@ module Railsquest::Commands
     end
 
     quest = Railsquest::Quest.for_name(name)
-    quest.uri = uri
+    quest.port = port
 
     if quest.exist?
       abort "You've already a quest #{quest}."

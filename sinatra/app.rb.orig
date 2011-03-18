@@ -51,10 +51,14 @@ helpers do
 end
 
 get "/" do
+<<<<<<< HEAD
+  @my_quests = Railsquest.quests
+  @other_quests_by_name = quest_browser.other_quests.group_by {|r| r.name}
+=======
   @my_quests     = Railsquest.quests
   @my_quest      = false
-  @other_quests_by_name = quest_browser.other_quests
-  @all_quests = @my_quests + @other_quests_by_name
+  @other_repos_by_name = quest_browser.other_quests.group_by {|r| r.name}
+>>>>>>> 793572ed4ef7db4a914fd28330fcdb85b9c80478
   @people              = railsquest_browser.other_railsquests
   haml :home
 end
@@ -81,21 +85,4 @@ get "/:quest.json" do
   response = Railsquest::Quest.for_name(params[:quest]).to_hash
   response["recent_commits"].map! { |c| c["committed_date_pretty"] = time_ago_in_words(Time.parse(c["committed_date"])).gsub("about ","") + " ago"; c }
   json response.to_json
-end
-
-post "/submit" do
-    puts params
-    require 'net/http'
-    require 'uri'
-    if params[:success] == "true"
-        Net::HTTP.post_form(URI.parse('http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'), { :quest_name => 'dragons'})        
-    end
-
-end
-
-post "/success" do
-    puts 'success!'
-   b = Badge.for_name(params[:quest_name])
-   b.init!
-   puts b
 end
