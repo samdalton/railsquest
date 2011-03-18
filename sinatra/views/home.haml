@@ -320,5 +320,5 @@
       %ul
         - for quest in @my_quests
           %li
-            %a{:href => quest.uri}
-              %span.name&= quest.name
+            %h3
+              %a{:href => quest.uri + '?id=' + Railsquest.host_name , :target => '_blank'}= quest.name

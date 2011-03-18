@@ -12,6 +12,7 @@ require 'railsquest/commands'
 require 'ostruct'
 require 'socket'
 require 'pathname'
+require 'rest-client'
 
 module Railsquest
   

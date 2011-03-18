@@ -74,9 +74,9 @@ end
 post "/submit" do
     puts params
     if params[:success] == "true"
-        redirect 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success/' + params[:quest_name]            
+        RestClient.get 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success/' + params[:quest_name]            
     end
-
+    json true
 end
 
 get "/success/:quest_name" do
