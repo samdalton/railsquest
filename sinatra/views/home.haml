@@ -243,7 +243,7 @@
       %ul
         - for person in @people
           %li
-            %a{:href => person.uri}
+            %a{:href => person.uri + '?id=' + Railsquest.host_name}
               %img.gravatar{:src => person.gravatar}
               %span.name&= person.name    
 
@@ -321,4 +321,4 @@
         - for quest in @my_quests
           %li
             %h3
-              %a{:href => quest.uri + '?id=' + Railsquest.host_name , :target => '_blank'}= quest.name
+              %a{:href => quest.uri + '?id=' + @adventurer , :target => '_blank'}= quest.name

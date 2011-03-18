@@ -50,13 +50,20 @@ helpers do
   end
 end
 
-get "/" do
+get '/' do
+   redirect '/start' 
+end
+
+get "/:id" do
   @my_quests     = Railsquest.quests
   @my_badges = Railsquest.badges
   @my_quest      = false
   @other_quests_by_name = quest_browser.other_quests
   @all_quests = @my_quests + @other_quests_by_name
   @people              = railsquest_browser.other_railsquests
+  
+  @adventurer = params[:id] if params[:id]
+  
   haml :home
 end
 
