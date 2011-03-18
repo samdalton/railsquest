@@ -52,6 +52,7 @@ end
 
 get "/" do
   @my_quests     = Railsquest.quests
+  @my_badges = Railsquest.badges
   @my_quest      = false
   @other_quests_by_name = quest_browser.other_quests
   @all_quests = @my_quests + @other_quests_by_name
@@ -82,12 +83,13 @@ get "/:quest.json" do
   response["recent_commits"].map! { |c| c["committed_date_pretty"] = time_ago_in_words(Time.parse(c["committed_date"])).gsub("about ","") + " ago"; c }
   json response.to_json
 end
-
-post "/submit" do
-    puts params
     require 'net/http'
     require 'uri'
+post "/submit" do
+    puts params
+
     if params[:success] == "true"
+        puts 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'
         Net::HTTP.post_form(URI.parse('http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success'), { :quest_name => 'dragons'})        
     end
 
@@ -95,7 +97,7 @@ end
 
 post "/success" do
     puts 'success!'
-   b = Badge.for_name(params[:quest_name])
+   b = Railsquest::Badge.for_name(params[:quest_name])
    b.init!
    puts b
 end

@@ -95,6 +95,10 @@ module Railsquest
       quests.find {|r| r.name == name}
     end
     
+    def badges
+       badges_path.children.map {|b| Badge.new(b)} 
+    end
+    
     def to_hash
       {
         "name" => config.name,

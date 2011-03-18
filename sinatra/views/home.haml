@@ -256,7 +256,7 @@
         - for quest in @all_quests
           %li
             %h3
-              %a{:href => quest.uri + '?id=' + Railsquest.host_name + '&callback=http://' + Railsquest.host_name + ':' + Railsquest.web_port.to_s + '/submit'}= quest
+              %a{:href => quest.uri + '?id=' + Railsquest.host_name + '/submit'}= quest
             / %ul
             /   - for repo in @all_quests[repo_name]
             /     %li
@@ -303,26 +303,22 @@
     });
 
   .projects
-    - if @other_repos_by_name.empty?
+    - if @my_badges.empty?
       %h2 No badges
     - else
-      %h2= pluralize @other_repos_by_name.length, "Adventurer", "Adventurers"
+      %h2= pluralize @my_badges.length, "Badge", "Badges"
       %ul
-        - for quest_name in @other_quests_by_name.keys.sort
+        - for badge in @my_badges
           %li
-            %h3&= quest_name
-            %ul
-              - for quest in @other_quests_by_name[quest_name].sort_by {|r| r.person.name}
-                %li
-                  %a{:href => quest.web_uri}&= quest.person.name
+            %h3= badge.name
+
   .people
-    - if @people.empty?
+    - if @my_quests.empty?
       %h2 No quests
     - else
-      %h2= pluralize @people.length, "Quest", "Quests"
+      %h2= pluralize @my_quests.length, "Quest", "Quests"
       %ul
-        - for person in @people
+        - for quest in @my_quests
           %li
-            %a{:href => person.uri}
-              %img.gravatar{:src => person.gravatar}
-              %span.name&= person.name
+            %a{:href => quest.uri}
+              %span.name&= quest.name
