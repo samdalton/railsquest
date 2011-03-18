@@ -52,6 +52,7 @@ end
 
 get "/" do
   @my_quests     = Railsquest.quests
+  @my_quest      = false
   @other_repos_by_name = quest_browser.other_quests.group_by {|r| r.name}
   @people              = railsquest_browser.other_railsquests
   haml :home
