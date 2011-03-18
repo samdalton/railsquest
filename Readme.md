@@ -84,7 +84,7 @@ Note: You might have to restart the avahi-daemon sometimes if you are having pro
 Official quest and support
 -------------------------------
 
-The official repo and support issues/tickets live at [github.com/toolmantim/railsquest](http://github.com/toolmantim/railsquest).
+The official quest and support issues/tickets live at [github.com/toolmantim/railsquest](http://github.com/toolmantim/railsquest).
 
 Feature and support discussions live at [groups.google.com/group/railsquest](http://groups.google.com/group/railsquest).
 

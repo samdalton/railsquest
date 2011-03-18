@@ -205,7 +205,7 @@
       :border-color #980
   
 - for quest in @my_quests
-  - heads = quest.grit_repo.heads
+  - heads = quest.grit_quest.heads
   
   .quest{:id => quest.html_id, 'data-name' => quest.name}
 
@@ -238,41 +238,41 @@
                 &= commit.author
     - else
       %ul.network
-        - for repo in quest_browser.quests_similar_to(quest)
-          %li.loading{'data-json-uri' => repo.json_uri}
-            %a.name{:href => "#{repo.person.uri}##{repo.html_id}"}= repo.person.name
+        - for quest in quest_browser.quests_similar_to(quest)
+          %li.loading{'data-json-uri' => quest.json_uri}
+            %a.name{:href => "#{quest.person.uri}##{quest.html_id}"}= quest.person.name
 
 - if local?
   :javascript
     $(function() {
       $("ul.network li").each(function() {
-        var repoLi = $(this);
-        $.getJSON(repoLi.attr("data-json-uri") + "?callback=?", function(data) {
-          repoLi.removeClass("loading");
-          $("<img class='gravatar'/>").attr("src", data.railsquest.gravatar).prependTo(repoLi);
-          $("<span class='branches' />").text(data.heads.join(", ")).appendTo(repoLi);
+        var questLi = $(this);
+        $.getJSON(questLi.attr("data-json-uri") + "?callback=?", function(data) {
+          questLi.removeClass("loading");
+          $("<img class='gravatar'/>").attr("src", data.railsquest.gravatar).prependTo(questLi);
+          $("<span class='branches' />").text(data.heads.join(", ")).appendTo(questLi);
           if(data.recent_commits.length > 1) $('<span class="more">+</span>')
             .click(function() {
               if ($(this).text() == "+") {
-                repoLi.find(".message").show();
+                questLi.find(".message").show();
                 $(this).text("-");
               } else {
-                repoLi.find(".message").each(function(i) {
+                questLi.find(".message").each(function(i) {
                   if (i != 0) $(this).hide();
                 });
                 $(this).text("+");
               }
             })
-            .appendTo(repoLi);
+            .appendTo(questLi);
           $(data.recent_commits).each(function(i) {
             var commit = this;
             var message = $("<p class='message'/>").html(
               $("<a/>").attr("href", data.railsquest.uri + encodeURIComponent(data.name) + "/" + commit.id).text(commit.message)
-            ).appendTo(repoLi).append(
+            ).appendTo(questLi).append(
               $("<span class='meta'/>")
                 .append($("<em class='branch'/>").text(commit.head && (" - " + commit.head)))
                 .append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name)
-                .appendTo(repoLi)
+                .appendTo(questLi)
             )
             if (i != 0) message.hide();
           });
@@ -281,18 +281,18 @@
     });
   
   .projects
-    - if @other_repos_by_name.empty?
+    - if @other_quests_by_name.empty?
       %h2 No other projects
     - else
-      %h2= pluralize @other_repos_by_name.length, "Other Project", "Other Projects"
+      %h2= pluralize @other_quests_by_name.length, "Other Project", "Other Projects"
       %ul
-        - for repo_name in @other_repos_by_name.keys.sort
+        - for quest_name in @other_quests_by_name.keys.sort
           %li
-            %h3&= repo_name
+            %h3&= quest_name
             %ul
-              - for repo in @other_repos_by_name[repo_name].sort_by {|r| r.person.name}
+              - for quest in @other_quests_by_name[quest_name].sort_by {|r| r.person.name}
                 %li
-                  %a{:href => repo.web_uri}&= repo.person.name
+                  %a{:href => quest.web_uri}&= quest.person.name
   .people
     - if @people.empty?
       %h2 No other quests

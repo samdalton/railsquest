@@ -21,9 +21,9 @@ class QuestBrowser
       ["rubystein", "Lachlan Hardy"],
       ["rubystein", "Grant Bissett"],
       ["tweeter", "Jason Crane"],
-    ].map do |(repo_name, person_name)|
+    ].map do |(quest_name, person_name)|
       person = RailsquestBrowser.new.railsquests.find {|p| p.name == person_name}
-      Quest.new(repo_name, "#{person.uri}##{repo_name}", person)
+      Quest.new(quest_name, "#{person.uri}##{quest_name}", person)
     end
   end
 end

@@ -14,7 +14,7 @@ module Railsquest
   module DateHelpers
     # Reports the approximate distance in time between two Time or Date objects or integers as seconds.
     # Set <tt>include_seconds</tt> to true if you want more detailed approximations when distance < 1 min, 29 secs
-    # Distances are reported based on the following table:
+    # Distances are questrted based on the following table:
     #
     #   0 <-> 29 secs                                                             # => less than a minute
     #   30 secs <-> 1 min, 29 secs                                                # => 1 minute

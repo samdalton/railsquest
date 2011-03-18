@@ -52,7 +52,7 @@ end
 
 get "/" do
   @my_quests     = Railsquest.quests
-  @other_repos_by_name = quest_browser.other_quests.group_by {|r| r.name}
+  @other_quests_by_name = quest_browser.other_quests.group_by {|r| r.name}
   @people              = railsquest_browser.other_railsquests
   haml :home
 end
@@ -67,7 +67,7 @@ end
 
 get "/:quest/:commit" do
   @quest = Railsquest::Quest.for_name(params[:quest])
-  @commit     = @quest.grit_repo.commit(params[:commit])
+  @commit     = @quest.grit_quest.commit(params[:commit])
   haml :commit
 end
 

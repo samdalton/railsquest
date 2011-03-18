@@ -36,21 +36,16 @@ module Railsquest
       path + "quests"
     end
 
-    def get_git_global_config(key)
-      `git config --global #{key}`.strip
-    end
+
     
     def config
       @config ||= begin
-        OpenStruct.new({
-          :name => get_git_global_config("user.name"),
-          :email => get_git_global_config("user.email")
-        })
+        OpenStruct.new
       end
     end
     
     def web_port
-      9331
+      9876
     end
     
     def web_uri

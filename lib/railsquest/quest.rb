@@ -3,8 +3,11 @@ require 'pathname'
 
 module Railsquest
   class Quest
+      
+      attr_accessor :name, :url
+      
     def self.for_name(name)
-      new(Railsquest.quests_path.join(name + ".git"))
+      new(Railsquest.quests_path.join(name + ".quest"))
     end
     def self.html_id(name)
       name.gsub(/[^A-Za-z-]+/, '').downcase
@@ -19,10 +22,10 @@ module Railsquest
     def exist?
       path.exist?
     end
-    def init!
-      path.mkpath
-      Dir.chdir(path) { `git init --bare` }
-    end
+    # def init!
+    #   path.mkpath
+    #   Dir.chdir(path) { `git init --bare` }
+    # end
     def name
       dirname.sub(".git",'')
     end
@@ -41,14 +44,14 @@ module Railsquest
     def web_uri
       Railsquest.web_uri + "#" + html_id
     end
-    def grit_repo
-      @grit_repo ||= Grit::Repo.new(path)
+    def grit_quest
+      @grit_quest ||= Grit::Repo.new(path)
     end
     def recent_commits
-      @commits ||= grit_repo.commits(nil, 10)
+      @commits ||= grit_quest.commits(nil, 10)
     end
     def readme_file
-      grit_repo.tree.contents.find {|c| c.name =~ /readme/i}
+      grit_quest.tree.contents.find {|c| c.name =~ /readme/i}
     end
     def rendered_readme
       case File.extname(readme_file.name)
@@ -66,7 +69,7 @@ module Railsquest
       path.rmtree
     end
     def to_hash
-      heads = grit_repo.heads
+      heads = grit_quest.heads
       {
         "name" => name,
         "html_friendly_name" => html_id, # TODO: Deprecate in v3. Renamed to html_id since 2.1.4

@@ -6,7 +6,7 @@ class Railsquest::Bonjour::Advertiser
   end
   def go!
     register_app
-    register_repos
+    register_quests
   end
   private
     def register_app
@@ -19,7 +19,7 @@ class Railsquest::Bonjour::Advertiser
       tr["version"] = Railsquest::VERSION
       DNSSD.register("#{Railsquest.config.name}'s railsquest", "_http._tcp,_railsquest", nil, Railsquest.web_port, tr)
     end
-    def register_repos
+    def register_quests
       loop do
         stop_old_services
         register_new_quests
@@ -37,23 +37,23 @@ class Railsquest::Bonjour::Advertiser
       @services.reject {|s| Railsquest.quests.include?(s.quest)}
     end
     def register_new_quests
-      new_quests.each do |new_repo|
-        STDOUT.puts "Registering #{new_repo.uri}"
+      new_quests.each do |new_quest|
+        STDOUT.puts "Registering #{new_quest.uri}"
         tr = DNSSD::TextRecord.new
-        tr["name"] = new_repo.name
-        tr["uri"] = new_repo.uri
+        tr["name"] = new_quest.name
+        tr["uri"] = new_quest.uri
         tr["bjour-name"] = Railsquest.config.name
         tr["bjour-email"] = Railsquest.config.email
         tr["bjour-uri"] = Railsquest.web_uri
         tr["bjour-gravatar"] = Railsquest.gravatar
         tr["bjour-version"] = Railsquest::VERSION
-        service = DNSSD.register(new_repo.name, "_git._tcp,_railsquest", nil, 9418, tr)
+        service = DNSSD.register(new_quest.name, "_git._tcp,_railsquest", nil, 9418, tr)
         service.class.instance_eval { attr_accessor(:quest) }
-        service.quest = new_repo
+        service.quest = new_quest
         @services << service
       end
     end
     def new_quests
-      Railsquest.quests.select {|repo| !@services.any? {|s| s.quest == repo } }
+      Railsquest.quests.select {|quest| !@services.any? {|s| s.quest == quest } }
     end
 end

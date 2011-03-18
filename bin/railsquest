@@ -31,7 +31,7 @@ when nil
   Process.waitall
 
 when "add", "init"
-  repo = Railsquest.add!(ARGV[1] || File.expand_path("."))
+  repo = Railsquest.add!(ARGV[1])
 
 when "remove", "rm"
   name = ARGV[1]
