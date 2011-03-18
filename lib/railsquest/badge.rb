@@ -1,4 +1,3 @@
-require 'grit'
 require 'pathname'
 
 module Railsquest
