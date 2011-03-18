@@ -77,11 +77,11 @@ module Railsquest
     end
     
     def git_uri
-      "git://#{host_name}/"
+      "http://#{host_name}/"
     end
 
     def quests
-      quests_path.children.map {|r| Quest.new(r)}.sort_by {|r| r.name}
+      quests_path.children.map {|q| Quest.new(q)}
     end
     
     def quest(name)

@@ -4,7 +4,7 @@ require 'pathname'
 module Railsquest
   class Quest
       
-      attr_accessor :name, :url
+      attr_accessor :name, :uri
       
     def self.for_name(name)
         n = name.gsub(' ', '_')
@@ -29,6 +29,10 @@ module Railsquest
     
     def init!
       Dir.chdir(Railsquest.quests_path) { `echo #{url} >> #{path}` }
+    end
+    
+    def uri
+        File.open(path) { |f| f.gets }
     end
     
     def name
@@ -74,20 +78,10 @@ module Railsquest
       path.rmtree
     end
     def to_hash
-      heads = grit_quest.heads
       {
         "name" => name,
-        "html_friendly_name" => html_id, # TODO: Deprecate in v3. Renamed to html_id since 2.1.4
-        "html_id" => html_id,
-        "uri" => uri,
-        "heads" => heads.map {|h| h.name},
-        "recent_commits" => recent_commits.collect do |c|
-          c.to_hash.merge(
-            "head" => (head = heads.find {|h| h.commit == c}) && head.name,
-            "gravatar" => c.author.gravatar_uri
-          )
-        end,
-        "railsquest" => Railsquest.to_hash
+        "url" => url,
+        "host_name" => Railsquest.host_name
       }
     end
   end

@@ -25,7 +25,7 @@ module Railsquest::Commands
     fork { Railsquest::Bonjour::Advertiser.new.go! }
   end
   
-  def add!(url, name = nil)
+  def add!(uri, name = nil)
          
     if name.nil?
       default_name = "My Awesome Quest"
@@ -35,7 +35,7 @@ module Railsquest::Commands
     end
 
     quest = Railsquest::Quest.for_name(name)
-    quest.url = url
+    quest.uri = uri
 
     if quest.exist?
       abort "You've already a quest #{quest}."
@@ -56,20 +56,4 @@ module Railsquest::Commands
     "Railsquest quest #{quest_dirname} created."
   end
   
-  def clone!(url, clone_name)
-    dir = clone_name || File.basename(url).chomp('.git')
-
-    if File.exist?(dir)
-      abort "Can't clone #{url} to #{dir}, the directory already exists."
-    end
-
-    `git clone #{url} #{dir}`
-    if $? != 0
-      abort "Failed to clone railsquest quest #{url} to #{dir}."
-    else
-      puts "Railsquest quest #{url} cloned to #{dir}."
-      add!(dir, dir)
-    end
-  end
-
 end

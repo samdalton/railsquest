@@ -51,7 +51,7 @@ helpers do
 end
 
 get "/" do
-  @my_quests     = Railsquest.quests
+  @my_quests = Railsquest.quests
   @other_quests_by_name = quest_browser.other_quests.group_by {|r| r.name}
   @people              = railsquest_browser.other_railsquests
   haml :home

@@ -29,24 +29,24 @@ when nil
   Process.waitall
 
 when "add", "init"
-  repo = Railsquest.add!(ARGV[1], ARGV[2])
+  quest = Railsquest.add!(ARGV[1], ARGV[2])
 
 when "remove", "rm"
   name = ARGV[1]
 
   if !name || name.empty?
     abort "You need to specify the name of the quest you'd like to remove:\n#{File.basename($0)} remove <path>"
-  elsif !(repo = Railsquest::Quest.for_name(name))
+  elsif !(quest = Railsquest::Quest.for_name(name))
     abort "#{name.inspect} is not a valid quest name"
   end
 
-  repo.remove!
+  quest.remove!
 
 when "clone"
   if ARGV[1].nil? || ARGV[1].empty?
     abort "You need to specify the path to the quest you'd like to clone:\n$ railsquest clone <path>"
   end
-  repo = Railsquest.clone!(ARGV[1], ARGV[2])
+  quest = Railsquest.clone!(ARGV[1], ARGV[2])
 
 when "help", "--help", "-h"
   puts <<-HELP
@@ -54,9 +54,9 @@ Usage: #{File.basename($0)} [<command>]
 
 Commands:
   none               - Start the web, git and bonjour serving
-  add [path]         - Add an existing git repo to railsquest
-  remove <name>      - Remove a repo 
-  clone <url> [path] - Clone a remote repo and add it to railsquest
+  add [path]         - Add an existing git quest to railsquest
+  remove <name>      - Remove a quest 
+  clone <url> [path] - Clone a remote quest and add it to railsquest
   help
   version
 HELP
