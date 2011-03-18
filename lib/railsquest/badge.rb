@@ -26,8 +26,8 @@ module Railsquest
       path.exist?
     end
     
-    def init!
-      Dir.chdir(Railsquest.badges_path) { `echo 'success' >> #{path}` }
+    def init!(signature)
+      Dir.chdir(Railsquest.badges_path) { `echo #{signature} >> #{path}` }
     end
     
     def uri

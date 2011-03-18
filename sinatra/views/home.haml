@@ -195,48 +195,11 @@
       :font-size 12px
       :text-shadow 0px 1px 1px #000
 
-- if local?
-  :javascript
-    $(function() {
-      $("ul.network li").each(function() {
-        var repoLi = $(this);
-        $.getJSON(repoLi.attr("data-json-uri") + "?callback=?", function(data) {
-          repoLi.removeClass("loading");
-          $("<img class='gravatar'/>").attr("src", data.railsquest.gravatar).prependTo(repoLi);
-          $("<span class='branches' />").text(data.heads.join(", ")).appendTo(repoLi);
-          if(data.recent_commits.length > 1) $('<span class="more">+</span>')
-            .click(function() {
-              if ($(this).text() == "+") {
-                repoLi.find(".message").show();
-                $(this).text("-");
-              } else {
-                repoLi.find(".message").each(function(i) {
-                  if (i != 0) $(this).hide();
-                });
-                $(this).text("+");
-              }
-            })
-            .appendTo(repoLi);
-          $(data.recent_commits).each(function(i) {
-            var commit = this;
-            var message = $("<p class='message'/>").html(
-              $("<a/>").attr("href", data.railsquest.uri + encodeURIComponent(data.name) + "/" + commit.id).text(commit.message)
-            ).appendTo(repoLi).append(
-              $("<span class='meta'/>")
-                .append($("<em class='branch'/>").text(commit.head && (" - " + commit.head)))
-                .append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name)
-                .appendTo(repoLi)
-            )
-            if (i != 0) message.hide();
-          });
-        });
-      });
-    });
-    
+- if local?    
   - unless @my_quest
     .create_quest
       %p
-        To create a quest: "railsquest add server_port 'Quest name'"
+        To create a quest: 'railsquest add server_port quest_name'
 
   .projects
     - if @people.empty?
@@ -260,51 +223,8 @@
           %li
             %h3
               %a{:href => quest.uri + '?id=' + Railsquest.host_name , :target => '_blank'}= quest.name
-            / %ul
-            /   - for repo in @all_quests[repo_name]
-            /     %li
-            /       %a{:href => repo.web_uri}&= repo.person.name
-              
               
 - else
-
-  :javascript
-    $(function() {
-      $("ul.network li").each(function() {
-        var questLi = $(this);
-        $.getJSON(questLi.attr("data-json-uri") + "?callback=?", function(data) {
-          questLi.removeClass("loading");
-          $("<img class='gravatar'/>").attr("src", data.railsquest.gravatar).prependTo(questLi);
-          $("<span class='branches' />").text(data.heads.join(", ")).appendTo(questLi);
-          if(data.recent_commits.length > 1) $('<span class="more">+</span>')
-            .click(function() {
-              if ($(this).text() == "+") {
-                questLi.find(".message").show();
-                $(this).text("-");
-              } else {
-                questLi.find(".message").each(function(i) {
-                  if (i != 0) $(this).hide();
-                });
-                $(this).text("+");
-              }
-            })
-            .appendTo(questLi);
-          $(data.recent_commits).each(function(i) {
-            var commit = this;
-            var message = $("<p class='message'/>").html(
-              $("<a/>").attr("href", data.railsquest.uri + encodeURIComponent(data.name) + "/" + commit.id).text(commit.message)
-            ).appendTo(questLi).append(
-              $("<span class='meta'/>")
-                .append($("<em class='branch'/>").text(commit.head && (" - " + commit.head)))
-                .append(" ~ " + commit.committed_date_pretty + " by " + commit.author.name)
-                .appendTo(questLi)
-            )
-            if (i != 0) message.hide();
-          });
-        });
-      });
-    });
-
   .projects
     - if @my_badges.empty?
       %h2 No badges
