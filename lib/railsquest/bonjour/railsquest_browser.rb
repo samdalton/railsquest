@@ -1,4 +1,5 @@
-class Railsquest::Bonjour::RailsquestBrowser
+module Railsquest::Bonjour
+class RailsquestBrowser
 
   def initialize
     @browser = Browser.new('_http._tcp,_railsquest')
@@ -19,4 +20,5 @@ class Railsquest::Bonjour::RailsquestBrowser
     railsquests.reject {|b| b.uri == Railsquest.web_uri}
   end
   
+end
 end

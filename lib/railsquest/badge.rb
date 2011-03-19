@@ -30,8 +30,9 @@ module Railsquest
       path.exist?
     end
 
-    def init!(signature)
-      Dir.chdir(Railsquest.badges_path) { `echo #{signature} >> #{path}` }
+    def init!(signature, original_host)
+        contents =  '{\"signature\" : \"' + signature + '\", \"original_host\" : ' + port +  '}'
+        Dir.chdir(Railsquest.badges_path) { `echo #{contents} >> #{path}` }
     end
 
     def uri
@@ -60,6 +61,10 @@ module Railsquest
 
     def remove!
       path.rmtree
+    end
+    
+    def verified?
+        RestClient.post
     end
 
     def to_hash

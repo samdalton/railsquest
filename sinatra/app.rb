@@ -84,14 +84,14 @@ post "/submit" do
     require 'digest/sha1'
     signature = Digest::SHA1.hexdigest params[:hostname] + params[:quest_name] + Railsquest.host_name + Railsquest::Quest.for_name(params[:quest_name]).secret
     
-    RestClient.post 'http://' + params[:hostname] + ':' + Railsquest.web_port.to_s + '/success', { :signature => signature, :quest_name => params[:quest_name] }         
+    RestClient.post 'http://' + params[:hostname] + ':' + Railsquest.web_port.to_s + '/success', { :signature => signature, :quest_name => params[:quest_name], :original_host => Railsquest.host_name }         
     
     redirect '/' + params[:hostname]
 end
 
 post "/success" do
    b = Railsquest::Badge.for_name(params[:quest_name])
-   b.init!(params[:signature])
+   b.init!(params[:signature], params[:original_host])
 end
 
 post "/verify" do
