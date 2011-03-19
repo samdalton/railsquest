@@ -56,7 +56,7 @@ For example:
 
   require 'rest-client'
 
-  RestClient.post 'http://localhost:9876/submit/', :hostname => hostname, :quest_name => 'My Funky Quest'
+  RestClient.post 'http://localhost:9876/submit', :hostname => hostname, :quest_name => 'My Funky Quest'
 
 Or using JQuery:
 
@@ -106,6 +106,7 @@ Contributors
 * [Clifford Heath](http://dataconstellation.com/)
 
 With blithe cribbage from bananajour by...
+* [Tim Lucas](http://www.toolmantim.com)
 * [Carla Hackett](http://carlahackettdesign.com/) (logo)
 * [Nathan de Vries](http://github.com/atnan)
 * [Lachlan Hardy](http://github.com/lachlanhardy)
