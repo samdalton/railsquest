@@ -222,7 +222,7 @@
     - if @all_quests.empty?
       %h2 No Quests
     - else
-      %h2= pluralize @all_quests.length, "Quest", "Quests"
+      %h2= 'My ' + (pluralize @all_quests.length, "Quest", "Quests")
       %ul
         - for quest in @all_quests
           %li
