@@ -245,7 +245,7 @@
     - if @all_quests.empty?
       %h2.table_heading No Quests
     - else
-      %h2.table_heading= pluralize @all_quests.length, "Quest", "Quests"
+      %h2.table_heading= 'My ' + (pluralize @all_quests.length, "Quest", "Quests")
       %ul
         - for quest in @all_quests
           %li.table_row

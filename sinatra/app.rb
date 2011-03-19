@@ -59,10 +59,10 @@ get "/:id" do
   @my_badges = Railsquest.badges
   @my_quest      = false
   @other_quests_by_name = quest_browser.other_quests
-  @all_quests = @other_quests_by_name
+  @all_quests = @other_quests_by_name + @my_quests
   @people              = railsquest_browser.other_railsquests
   
-  @adventurer = params[:id] if params[:id]
+  @adventurer = params[:hostname] if params[:hostname]
   
   haml :home
 end
