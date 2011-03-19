@@ -81,8 +81,8 @@ get '/user/:hostname' do
    haml :user 
 end
 
-get "/badges" do
-   json Railsquest.badges 
+get "/badges.json" do
+   json Railsquest.badges.to_json, :layout => false 
 end
 
 get "/quests" do
