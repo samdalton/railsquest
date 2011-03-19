@@ -79,7 +79,7 @@ module Railsquest
     def to_hash
       {
         "name" => name,
-        "url" => url,
+        "uri" => uri,
         "host_name" => Railsquest.host_name
       }
     end

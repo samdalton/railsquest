@@ -64,7 +64,7 @@ end
 
 get '/user/:hostname' do
    @badges = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/badges'))
-   # @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))
+   @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))
    
    haml :user 
 end

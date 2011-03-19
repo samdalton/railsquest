@@ -89,7 +89,7 @@ module Railsquest
     end
 
     def quests
-      quests_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|q| Quest.new(q)  }
+      quests_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|q| Quest.new(q).to_hash  }
     end
 
     def quest(name)
