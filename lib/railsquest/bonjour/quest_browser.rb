@@ -20,7 +20,7 @@ class Railsquest::Bonjour::QuestBrowser
   end
   
   def other_quests
-    quests.reject {|r| Railsquest.quests.any? {|my_rep| my_rep.name == r.name}}
+    quests.reject {|r| Railsquest.quests.any? {|my_quest| my_quest.name == r.name}}
   end
   
   def quests_similar_to(quest)
