@@ -60,7 +60,7 @@ get "/:hostname" do
   @my_quest      = false
   @other_quests_by_name = quest_browser.other_quests
   @all_quests = @other_quests_by_name + @my_quests
-  @people              = railsquest_browser.other_railsquests
+  @people = railsquest_browser.all_railsquests
   
   @adventurer = params[:hostname] if params[:hostname]
   

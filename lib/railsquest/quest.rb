@@ -42,7 +42,7 @@ module Railsquest
     end
 
     def uri
-      Railsquest.git_uri.gsub(/\/$/, '') + ':' + File.open(path) { |f| JSON.parse(f.gets)["port"].to_s }
+      Railsquest.quest_uri.gsub(/\/$/, '') + ':' + File.open(path) { |f| JSON.parse(f.gets)["port"].to_s }
     end
 
     def secret

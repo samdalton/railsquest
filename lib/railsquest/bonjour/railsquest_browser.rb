@@ -20,5 +20,9 @@ class RailsquestBrowser
     railsquests.reject {|b| b.uri == Railsquest.web_uri}
   end
   
+  def all_railsquests
+      railsquests
+  end
+  
 end
 end

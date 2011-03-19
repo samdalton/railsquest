@@ -36,7 +36,7 @@ module Railsquest
     end
 
     def uri
-      Railsquest.git_uri.gsub(/\/$/, '') + ':' + File.open(path) { |f| f.gets }
+      Railsquest.quest_uri.gsub(/\/$/, '') + ':' + File.open(path) { |f| f.gets }
     end
 
     def name

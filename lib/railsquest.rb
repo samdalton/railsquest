@@ -84,7 +84,7 @@ module Railsquest
       end
     end
 
-    def git_uri
+    def quest_uri
       "http://#{host_name}/"
     end
 
@@ -105,7 +105,7 @@ module Railsquest
         "name" => config.name,
         "email" => config.email,
         "uri"  => web_uri,
-        "git-uri" => git_uri,
+        "git-uri" => quest_uri,
         "gravatar" => Railsquest.gravatar,
         "version" => Railsquest::VERSION,
         "quests" => quests.collect do |r|
