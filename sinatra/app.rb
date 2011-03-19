@@ -63,8 +63,15 @@ get '/run/:hostname' do
 end
 
 get '/user/:hostname' do
-   @badges = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/badges'))
-   @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))
+    host = params[:hostname]
+    if Railsquest.host_name.match(host)
+        @badges = Railsquest.badges.map { |q| q.to_hash }
+       @quests =  Railsquest.quests.map { |q| q.to_hash }
+   else
+       @badges = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/badges'))
+       @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))       
+   end
+   
    @adventurer = Railsquest.host_name
    haml :user 
 end
