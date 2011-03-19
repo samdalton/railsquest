@@ -128,10 +128,11 @@
       :height 20px
     
     .projects, .people
+      :-moz-box-shadow 0px 2px 10px #000
+      :-webkit-box-shadow 0px 2px 10px #000
       :float left
       :width 47%
       :background-color #686194
-      :border 4px solid #686194
       :-webkit-border-radius 10px
       :-moz-border-radius 10px
       :margin-top 10px
@@ -144,9 +145,40 @@
         :background-color #686194
         :color #fff
         :text-transform uppercase
+        
+      h2.table_heading
+        :-webkit-border-top-left-radius 5px
+        :-moz-border-topleft-radius 5px
+        :-webkit-border-top-right-radius 5px
+        :-moz-border-topright-radius 5px
+        :border-top 1px solid #B7B7B7
+        :border-left 1px solid #989898
+        :border-right 1px solid #989898
+        :border-bottom 1px solid #858585
+        :background-color #ccc
+        :background-color #B7B7B7
+        :background -webkit-gradient(linear,left bottom,left top,color-stop(0.1, rgb(163,163,163)),color-stop(0.9, rgb(222,222,222)))
+        :background -moz-linear-gradient(top,  #DEDEDE,  #A3A3A3)
+        :color #3E3E3E
+        :text-shadow 0px 1px 1px #fff
+        :padding 5px
+        
+      li.table_row
+        :border-top 1px solid #fff
+        :border-left 1px solid #989898
+        :border-right 1px solid #989898
+        :border-bottom 1px solid #858585
+        :background-color #ccc
+        :background-color #B7B7B7
+        :background -webkit-gradient(linear,left bottom,left top,color-stop(0.1, rgb(163,163,163)),color-stop(0.9, rgb(222,222,222)))
+        :background -moz-linear-gradient(top,  #DEDEDE,  #A3A3A3)
+        :color #3E3E3E
+        :text-shadow 0px 1px 1px #fff
+        :padding 10px
 
       h3
-        :margin 0 0 5px 0
+        :margin 0 0 0px 0
+        :color #3E3E3E
         
       ul, li
         :margin 0
@@ -155,13 +187,8 @@
 
       > ul
         :font-size 12px
-        :margin 10px
-        > li
-          :margin-bottom 10px
-        li li
-          :margin-right 0.2em
         a
-          :color #000
+          :color #3E3E3E
       
     .projects
       ul li
@@ -174,18 +201,15 @@
       :clear both
     
     .people
-      :margin-left 20px
+      :margin-left 52px
+      
+    .people, .projects
       ul
         li
-          :float left
-          :width 50%
-          :margin-bottom 5px
           a
             :text-decoration none
-            .name
+            &:hover
               :text-decoration underline
-            img
-              :vertical-align middle
       
     .local .quest
       :border-color #980
@@ -208,24 +232,23 @@
 
   .projects
     - if @people.empty?
-      %h2 No Adventurers
+      %h2.table_heading No Adventurers
     - else
-      %h2= pluralize @people.length, "Adventurer", "Adventurers"
+      %h2.table_heading= pluralize @people.length, "Adventurer", "Adventurers"
       %ul
         - for person in @people
-          %li
-            %a{:href => person.uri + Railsquest.host_name}
-              %img.gravatar{:src => person.gravatar}
-              %span.name&= person.name    
+          %li.table_row
+            %h3
+              %a{:href => person.uri + Railsquest.host_name}= person.name    
 
   .people
     - if @all_quests.empty?
-      %h2 No Quests
+      %h2.table_heading No Quests
     - else
-      %h2= 'My ' + (pluralize @all_quests.length, "Quest", "Quests")
+      %h2.table_heading= 'My ' + (pluralize @all_quests.length, "Quest", "Quests")
       %ul
         - for quest in @all_quests
-          %li
+          %li.table_row
             %h3
               %a{:href => quest.uri + '?hostname=' + Railsquest.host_name}= quest.name
               
@@ -233,21 +256,21 @@
   .clear
   .projects
     - if @my_badges.empty?
-      %h2 No badges
+      %h2.table_heading No badges
     - else
       %h2= pluralize @my_badges.length, "Badge", "Badges"
       %ul
         - for badge in @my_badges
-          %li
+          %li.table_row
             %h3= badge.name
 
   .people
     - if @my_quests.empty?
-      %h2 No quests
+      %h2.table_heading No quests
     - else
       %h2= pluralize @my_quests.length, "Quest", "Quests"
       %ul
         - for quest in @my_quests
-          %li
+          %li.table_row
             %h3
               %a{:href => quest.uri + '?hostname=' + @adventurer }= quest.name
