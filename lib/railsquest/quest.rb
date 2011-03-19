@@ -35,8 +35,7 @@ module Railsquest
 
     def init!
       secret = `uuidgen`.strip
-      # contents =  '{\"secret\" : \"' + secret + '\", \"port\" : ' + port +  '}'
-      contents = { :secret => secret.to_s, :port => port.to_s}
+      contents =  '{\"secret\" : \"' + secret + '\", \"port\" : ' + port +  '}'
       Dir.chdir(Railsquest.quests_path) { `echo "#{JSON.generate(contents)}" >> #{path}` }
     end
 

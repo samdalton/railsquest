@@ -82,9 +82,11 @@ get '/user/:hostname' do
        valid = false
         begin
              res = RestClient.post 'http://' + badge['original_host'] + ':' + Railsquest.web_port.to_s + '/verify', { :signature => contents['signature'], :quest_name => badge['name'], :hostname => Railsquest.host_name }
+             puts res.inspect
              valid = res.body
-        rescue
-            false
+        rescue Exception => e
+            puts e.inspect
+            valid = false
         end
        
        
