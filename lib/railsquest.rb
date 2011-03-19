@@ -97,7 +97,7 @@ module Railsquest
     end
 
     def badges
-       badges_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|b| Badge.new(b) }
+       badges_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|b| Badge.new(b).to_hash }
     end
 
     def to_hash

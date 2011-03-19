@@ -73,7 +73,10 @@ module Railsquest
     end
 
     def to_hash
+        contents = JSON.parse(File.read(path))
       {
+          "original_host" => contents['original_host'],
+          "signature" => contents['signature'],
         "name" => name
       }
     end

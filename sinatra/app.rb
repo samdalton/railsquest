@@ -75,7 +75,8 @@ get "/badges" do
 end
 
 get "/quests" do
-   json Railsquest.quests 
+    content_type :json
+    Railsquest.quests 
 end
 
 get "/index.json" do

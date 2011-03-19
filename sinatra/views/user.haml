@@ -7,7 +7,7 @@
     %ul
       - for badge in @badges
         %li.table_row
-          %h3= badge.name + (badge.verified? ? ' Verified' : ' Unverified')
+          %h3= badge['name']
 
 .people
   - if @quests.empty?
