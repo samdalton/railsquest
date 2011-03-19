@@ -2,7 +2,7 @@ module Railsquest::Bonjour
 class QuestBrowser
 
   def initialize
-    @browser = Railsquest::Bonjour::Browser.new('_git._tcp,_railsquest')
+    @browser = Browser.new('_git._tcp,_railsquest')
   end
 
   def quests
