@@ -54,18 +54,6 @@ get '/' do
    redirect '/start' 
 end
 
-get "/:hostname" do
-  @my_quests     = Railsquest.quests
-  @my_badges = Railsquest.badges
-  @my_quest      = false
-  @other_quests_by_name = quest_browser.other_quests
-  @all_quests = @other_quests_by_name + @my_quests
-  @people = railsquest_browser.all_railsquests
-  
-  @adventurer = params[:hostname] if params[:hostname]
-  
-  haml :home
-end
 
 get '/run/:hostname' do
     @quest_host = params[:hostname]
@@ -91,7 +79,8 @@ get "/quests" do
 end
 
 get "/index.json" do
-  json Railsquest.to_hash.to_json
+    content_type "application/json"
+   Railsquest.to_hash.to_json
 end
 
 get "/:quest.json" do
@@ -123,4 +112,17 @@ post "/verify" do
    require 'digest/sha1'
    checksum = Digest::SHA1.hexdigest params[:hostname] + params[:quest_name] + Railsquest.host_name + Railsquest::Quest.for_name(params[:quest_name]).secret
     json signature == checksum
+end
+
+get "/:hostname" do
+  @my_quests     = Railsquest.quests
+  @my_badges = Railsquest.badges
+  @my_quest      = false
+  @other_quests_by_name = quest_browser.other_quests
+  @all_quests = @other_quests_by_name + @my_quests
+  @people = railsquest_browser.all_railsquests
+  
+  @adventurer = params[:hostname] if params[:hostname]
+  
+  haml :home
 end
