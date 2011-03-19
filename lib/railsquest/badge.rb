@@ -65,7 +65,7 @@ module Railsquest
     
     def verified?
         contents = File.open(path) { |f| JSON.parse(f.gets) }
-        RestClient.post 'http://' + contents['original_host'] + ':' + Railsquest.web_port.to_s + '/verify', { :signature => contents['signature'], :quest_name => name, :host_name => Railsquest.web_host } 
+        RestClient.post 'http://' + contents['original_host'] + ':' + Railsquest.web_port.to_s + '/verify', { :signature => contents['signature'], :quest_name => name, :host_name => Railsquest.host_name } 
     end
 
     def to_hash
