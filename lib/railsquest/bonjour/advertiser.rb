@@ -47,7 +47,7 @@ class Railsquest::Bonjour::Advertiser
         tr["bjour-uri"] = Railsquest.web_uri
         tr["bjour-gravatar"] = Railsquest.gravatar
         tr["bjour-version"] = Railsquest::VERSION
-        service = DNSSD.register(new_quest.name, "_git._tcp,_railsquest", nil, 9418, tr)
+        service = DNSSD.register(new_quest.name, "_git._tcp,_railsquest", nil, 9877, tr)
         service.class.instance_eval { attr_accessor(:quest) }
         service.quest = new_quest
         @services << service
