@@ -60,7 +60,7 @@ For example:
 
 Or using JQuery:
 
-  $.post('http://localhost:9876/submit/', {hostname: hostname, quest_name: 'My Funky Quest'});
+  $.post('http://localhost:9876/submit', {hostname: hostname, quest_name: 'My Funky Quest'});
 
 Railsquest will then sign these facts into an achievement badge that will be displayed on the adventurer's trophy page!
 
