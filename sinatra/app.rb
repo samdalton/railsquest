@@ -67,6 +67,12 @@ get "/:hostname" do
   haml :home
 end
 
+get '/run/:hostname' do
+    @quest_host = params[:hostname]
+   @challenger_host = Railsquest.host_name
+   
+   haml :run
+end
 
 get "/index.json" do
   json Railsquest.to_hash.to_json

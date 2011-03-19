@@ -18,4 +18,8 @@ class Railsquest::Bonjour::Person
     {"name" => name, "email" => email, "uri" => uri, "gravatar" => gravatar}
   end
   
+  def host_name
+    uri.gsub(/http:\/\//, '').gsub(/:9876/, '')
+  end
+  
 end

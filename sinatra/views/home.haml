@@ -241,7 +241,7 @@
         - for person in @people
           %li.table_row
             %h3
-              %a{:href => person.uri + Railsquest.host_name}= person.name    
+              %a{:href => '/user/' + person.host_name }= person.name    
 
   .people
     - if @all_quests.empty?
@@ -252,7 +252,7 @@
         - for quest in @all_quests
           %li.table_row
             %h3
-              %a{:href => quest.uri + '?hostname=' + Railsquest.host_name}= quest.name
+              %a{:href => '/run/' +  quest.uri.gsub(/http:\/\//, '')}= quest.name
               
 - else
   .clear
