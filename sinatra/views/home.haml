@@ -265,6 +265,7 @@
         - for badge in @my_badges
           %li.table_row
             %h3= badge.name
+            %h3= badge.verified?
 
   .people
     - if @my_quests.empty?
