@@ -82,7 +82,8 @@ get '/user/:hostname' do
 end
 
 get "/badges.json" do
-   json Railsquest.badges.to_json, :layout => false 
+    content_type :json
+   Railsquest.badges.to_json
 end
 
 get "/quests" do
