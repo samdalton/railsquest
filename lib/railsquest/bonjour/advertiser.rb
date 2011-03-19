@@ -32,7 +32,7 @@ class Railsquest::Bonjour::Advertiser
 
     def stop_old_services
       old_services.each do |old_service|
-        STDOUT.puts "Unregistering #{old_service.quest['uri']}"
+        STDOUT.puts "Unregistering #{old_service.quest.uri}"
         old_service.stop
         @services.delete(old_service)
       end
@@ -44,16 +44,16 @@ class Railsquest::Bonjour::Advertiser
 
     def register_new_quests
       new_quests.each do |new_quest|
-        STDOUT.puts "Registering #{new_quest['uri']}"
+        STDOUT.puts "Registering #{new_quest.uri}"
         tr = DNSSD::TextRecord.new
-        tr["name"] = new_quest['name']
-        tr["uri"] = new_quest['uri']
+        tr["name"] = new_quest.name
+        tr["uri"] = new_quest.uri
         tr["bjour-name"] = Railsquest.config.name
         tr["bjour-email"] = Railsquest.config.email
         tr["bjour-uri"] = Railsquest.web_uri
         tr["bjour-gravatar"] = Railsquest.gravatar
         tr["bjour-version"] = Railsquest::VERSION
-        service = DNSSD.register(new_quest['name'], "_git._tcp,_railsquest", nil, 9877, tr)
+        service = DNSSD.register(new_quest.name, "_git._tcp,_railsquest", nil, 9877, tr)
         service.class.instance_eval { attr_accessor(:quest) }
         service.quest = new_quest
         @services << service

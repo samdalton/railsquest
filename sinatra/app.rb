@@ -76,7 +76,7 @@ end
 
 get "/quests" do
     content_type :json
-    Railsquest.quests 
+    Railsquest.quests.map { |q| q.to_hash }.to_json 
 end
 
 get "/index.json" do

@@ -252,6 +252,6 @@
         - for quest in @all_quests
           %li.table_row
             %h3
-              %a{:href => '/run/' +  quest['uri'].gsub(/http:\/\//, '').gsub(/\//, '')}= quest['name']
+              %a{:href => '/run/' +  quest.uri.gsub(/http:\/\//, '').gsub(/\//, '')}= quest.name
               
-
+-
