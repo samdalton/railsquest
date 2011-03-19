@@ -10,7 +10,7 @@ module Railsquest
     attr_reader :secret
 
     def self.for_name(name)
-        n = name.gsub(' ', '_')
+        n = name.gsub(/[^A-Za-z-]+/, '_')
         q = new(Railsquest.quests_path.join(n + ".quest"))
         q.name = n
         q
