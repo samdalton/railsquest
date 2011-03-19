@@ -122,3 +122,6 @@
         $("<embed bgcolor='#000000' height='400' width='550' name='pbjt' pluginspage='http://www.adobe.com/go/getflashplayer' quality='high' src='/pbjt.swf' style='position:fixed;top:0;left:0;width:100%;height:100%' type='application/x-shockwave-flash' />").appendTo($("body"));
       });
       $("#rm").bind("click", function(){  $("html").toggleClass("rm") });
+      $(document).bind("keypress", function(e) {
+        if (String.fromCharCode(e.charCode) == 'S') { $('#theme')[0].pause(); }
+      });
