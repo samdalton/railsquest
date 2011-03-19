@@ -14,12 +14,6 @@ module Railsquest::Commands
       Sinatra::Application.run!
     end
   end
-
-  # todo serve their server!
-  def serve_git!
-    puts "* Starting " + "#{git_uri}".foreground(:yellow)
-    fork { exec "git daemon --base-path=#{quests_path} --export-all" }
-  end
   
   def advertise!
     fork { Railsquest::Bonjour::Advertiser.new.go! }
