@@ -15,31 +15,31 @@ require 'pathname'
 require 'rest-client'
 
 module Railsquest
-  
+
   class << self
 
     include DateHelpers
     include GravatarHelpers
     include Commands
-    
+
     def setup?
       quests_path.exist?
       badges_path.exist?
     end
-    
+
     def setup!
       quests_path.mkpath
       badges_path.mkpath
     end
-    
+
     def path
       Pathname("~/.railsquest").expand_path
     end
-    
+
     def quests_path
       path + "quests"
     end
-    
+
     def badges_path
       path + "badges"
     end
@@ -47,7 +47,7 @@ module Railsquest
     def get_git_global_config(key)
       `git config --global #{key}`.strip
     end
-    
+
     def config
       @config ||= begin
         OpenStruct.new({
@@ -56,15 +56,15 @@ module Railsquest
         })
       end
     end
-    
+
     def web_port
       9876
     end
-    
+
     def web_uri
       "http://#{host_name}:#{web_port}/"
     end
-    
+
     def host_name
       hn = get_git_global_config("railsquest.hostname")
       unless hn.nil? or hn.empty?
@@ -83,7 +83,7 @@ module Railsquest
         hn + ".local"
       end
     end
-    
+
     def git_uri
       "http://#{host_name}/"
     end
@@ -91,15 +91,15 @@ module Railsquest
     def quests
       quests_path.children.map {|q| Quest.new(q) unless q.to_s =~ /DS_Store/ }
     end
-    
+
     def quest(name)
       quests.find {|r| r.name == name}
     end
-    
+
     def badges
-       badges_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|b| Badge.new(b) } 
+       badges_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|b| Badge.new(b) }
     end
-    
+
     def to_hash
       {
         "name" => config.name,
@@ -113,7 +113,7 @@ module Railsquest
         end
       }
     end
-    
+
   end
-  
+
 end

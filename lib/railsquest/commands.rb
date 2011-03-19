@@ -18,9 +18,9 @@ module Railsquest::Commands
   def advertise!
     fork { Railsquest::Bonjour::Advertiser.new.go! }
   end
-  
+
   def add!(port, name = nil)
-         
+
     if name.nil?
       default_name = "My Awesome Quest"
       print "Quest Name?".foreground(:yellow) + " [#{default_name}] "
@@ -34,20 +34,20 @@ module Railsquest::Commands
     if quest.exist?
       abort "You've already a quest #{quest}."
     end
-    
+
     quest.init!
-    
+
     puts init_success_message(quest.dirname)
 
     quest
   end
-  
+
   def init_success_message(quest_dirname)
     plain_init_success_message(quest_dirname)
   end
-  
+
   def plain_init_success_message(quest_dirname)
     "Railsquest quest #{quest_dirname} created."
   end
-  
+
 end

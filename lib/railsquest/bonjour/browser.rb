@@ -23,9 +23,11 @@ class Railsquest::Bonjour::Browser
     @replies = {}
     watch!
   end
+
   def replies
     @mutex.synchronize { @replies.values }
   end
+
   private
     def watch!
       Thread.new(@service, @mutex, @replies) do |service, mutex, replies|
