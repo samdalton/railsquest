@@ -252,27 +252,6 @@
         - for quest in @all_quests
           %li.table_row
             %h3
-              %a{:href => '/run/' +  quest.uri.gsub(/http:\/\//, '')}= quest.name
+              %a{:href => '/run/' +  quest.uri.gsub(/http:\/\//, '').gsub(/\//, '')}= quest.name
               
-- else
-  .clear
-  .projects
-    - if @my_badges.empty?
-      %h2.table_heading No badges
-    - else
-      %h2.table_heading= pluralize @my_badges.length, "Badge", "Badges"
-      %ul
-        - for badge in @my_badges
-          %li.table_row
-            %h3= badge.name + (badge.verified? ? ' Verified' : ' Unverified')
 
-  .people
-    - if @my_quests.empty?
-      %h2.table_heading No quests
-    - else
-      %h2.table_heading= pluralize @my_quests.length, "Quest", "Quests"
-      %ul
-        - for quest in @my_quests
-          %li.table_row
-            %h3
-              %a{:href => quest.uri + '?hostname=' + @adventurer }= quest.name

@@ -74,6 +74,21 @@ get '/run/:hostname' do
    haml :run
 end
 
+get '/user/:hostname' do
+   @badges = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/badges'))
+   # @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))
+   
+   haml :user 
+end
+
+get "/badges" do
+   json Railsquest.badges 
+end
+
+get "/quests" do
+   json Railsquest.quests 
+end
+
 get "/index.json" do
   json Railsquest.to_hash.to_json
 end

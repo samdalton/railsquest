@@ -1,0 +1,21 @@
+.clear
+.projects
+  - if @badges.empty?
+    %h2.table_heading No badges
+  - else
+    %h2.table_heading= pluralize @badges.length, "Badge", "Badges"
+    %ul
+      - for badge in @badges
+        %li.table_row
+          %h3= badge.name + (badge.verified? ? ' Verified' : ' Unverified')
+
+.people
+  - if @quests.empty?
+    %h2.table_heading No quests
+  - else
+    %h2.table_heading= pluralize @quests.length, "Quest", "Quests"
+    %ul
+      - for quest in @quests
+        %li.table_row
+          %h3
+            %a{:href => quest.uri + '?hostname=' + @adventurer }= quest.name

@@ -24,5 +24,9 @@ class RailsquestBrowser
       railsquests
   end
   
+  def find_person(hostname)
+    railsquests.find { |u| u.uri =~ /hostname/}
+  end
+  
 end
 end
