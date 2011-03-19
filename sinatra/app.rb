@@ -81,7 +81,7 @@ get '/user/:hostname' do
    @badges = @badges.collect do |badge|
        valid = false
         begin
-             res = RestClient.post 'http://' + badge['original_host'] + ':' + Railsquest.web_port.to_s + '/verify', { :signature => contents['signature'], :quest_name => badge['name'], :hostname => Railsquest.host_name }
+             res = RestClient.post 'http://' + badge['original_host'] + ':' + Railsquest.web_port.to_s + '/verify', { :signature => badge['signature'], :quest_name => badge['name'], :hostname => Railsquest.host_name }
              puts res.inspect
              valid = res.body
         rescue Exception => e
@@ -137,10 +137,14 @@ post "/success" do
 end
 
 post "/verify" do
+    puts params
    signature = params[:signature] 
    require 'digest/sha1'
    checksum = Digest::SHA1.hexdigest params[:hostname] + params[:quest_name] + Railsquest.host_name + Railsquest::Quest.for_name(params[:quest_name]).secret
    content_type :json
+   
+   puts signature + ' ' + checksum
+   
     (signature == checksum).to_json
 end
 
