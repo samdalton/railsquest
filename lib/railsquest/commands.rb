@@ -14,7 +14,7 @@ module Railsquest::Commands
       Sinatra::Application.run!
     end
   end
-  
+
   def advertise!
     fork { Railsquest::Bonjour::Advertiser.new.go! }
   end
