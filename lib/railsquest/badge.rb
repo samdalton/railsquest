@@ -31,7 +31,7 @@ module Railsquest
     end
 
     def init!(signature, original_host)
-        contents =  '{\"signature\" : \"' + signature + '\", \"original_host\" : ' + original_host +  '}'
+        contents =  '{\"signature\" : \"' + signature + '\", \"original_host\" : \"' + original_host +  '\"}'
         Dir.chdir(Railsquest.badges_path) { `echo #{contents} >> #{path}` }
     end
 
