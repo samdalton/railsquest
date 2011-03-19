@@ -18,4 +18,4 @@
       - for quest in @quests
         %li.table_row
           %h3
-            %a{:href => quest.uri + '?hostname=' + @adventurer }= quest.name
+            %a{:href => quest['uri'] + '?hostname=' + @adventurer }= quest['name']
