@@ -65,13 +65,13 @@ end
 get '/user/:hostname' do
    @badges = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/badges'))
    @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))
-   
+   @adventurer = Railsquest.host_name
    haml :user 
 end
 
 get "/badges" do
     content_type :json
-   Railsquest.badges.to_json
+   Railsquest.badges.map { |q| q.to_hash }.to_json
 end
 
 get "/quests" do
