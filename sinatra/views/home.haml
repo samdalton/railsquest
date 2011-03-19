@@ -230,6 +230,7 @@
               %a{:href => quest.uri + '?hostname=' + Railsquest.host_name}= quest.name
               
 - else
+  .clear
   .projects
     - if @my_badges.empty?
       %h2 No badges
