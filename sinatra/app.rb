@@ -68,8 +68,27 @@ get '/user/:hostname' do
         @badges = Railsquest.badges.map { |q| q.to_hash }
        @quests =  Railsquest.quests.map { |q| q.to_hash }
    else
-       @badges = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/badges'))
-       @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))       
+       begin
+           @badges = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/badges'))
+           @quests = JSON.parse(RestClient.get('http://' + params[:hostname] + ':9876/quests'))   
+       rescue
+           @badges = []
+           @quests = []
+       end    
+   end
+   
+   # check if each badge is valid
+   @badges = @badges.collect do |badge|
+       valid = false
+        begin
+             res = RestClient.post 'http://' + badge['original_host'] + ':' + Railsquest.web_port.to_s + '/verify', { :signature => contents['signature'], :quest_name => badge['name'], :hostname => Railsquest.host_name }
+             valid = res.body
+        rescue
+            false
+        end
+       
+       
+       badge.merge({ :valid => valid})
    end
    
    @adventurer = Railsquest.host_name
