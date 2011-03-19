@@ -260,7 +260,7 @@
     - if @my_badges.empty?
       %h2.table_heading No badges
     - else
-      %h2= pluralize @my_badges.length, "Badge", "Badges"
+      %h2.table_heading= pluralize @my_badges.length, "Badge", "Badges"
       %ul
         - for badge in @my_badges
           %li.table_row
@@ -270,7 +270,7 @@
     - if @my_quests.empty?
       %h2.table_heading No quests
     - else
-      %h2= pluralize @my_quests.length, "Quest", "Quests"
+      %h2.table_heading= pluralize @my_quests.length, "Quest", "Quests"
       %ul
         - for quest in @my_quests
           %li.table_row
