@@ -6,7 +6,6 @@ module Railsquest
   class Quest
 
     attr_accessor :name, :port
-
     attr_reader :secret
 
     def self.for_name(name)
@@ -36,9 +35,9 @@ module Railsquest
 
     def init!
       secret = `uuidgen`.strip
-      contents =  '{\"secret\" : \"' + secret + '\", \"port\" : ' + port +  '}'
-      puts contents
-      Dir.chdir(Railsquest.quests_path) { `echo "#{contents}" >> #{path}` }
+      # contents =  '{\"secret\" : \"' + secret + '\", \"port\" : ' + port +  '}'
+      contents = { :secret => secret.to_s, :port => port.to_s}
+      Dir.chdir(Railsquest.quests_path) { `echo "#{JSON.generate(contents)}" >> #{path}` }
     end
 
     def uri
@@ -67,6 +66,10 @@ module Railsquest
 
     def web_uri
       Railsquest.web_uri + "#" + html_id
+    end
+
+    def attempts
+        
     end
 
     def remove!

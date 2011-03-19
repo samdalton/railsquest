@@ -74,7 +74,6 @@ end
 
 get "/:quest.json" do
   response = Railsquest::Quest.for_name(params[:quest]).to_hash
-  response["recent_commits"].map! { |c| c["committed_date_pretty"] = time_ago_in_words(Time.parse(c["committed_date"])).gsub("about ","") + " ago"; c }
   json response.to_json
 end    
   

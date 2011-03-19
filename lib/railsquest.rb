@@ -89,7 +89,7 @@ module Railsquest
     end
 
     def quests
-      quests_path.children.map {|q| Quest.new(q) unless q.to_s =~ /DS_Store/ }
+      quests_path.children.reject{ |b| b.to_s =~ /DS_Store/}.map {|q| Quest.new(q)  }
     end
 
     def quest(name)
