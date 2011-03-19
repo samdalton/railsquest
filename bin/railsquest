@@ -24,7 +24,6 @@ case ARGV.first
 
 when nil
   pids << Railsquest.serve_web!
-  pids << Railsquest.serve_git!
   pids << Railsquest.advertise!
   Process.waitall
 
