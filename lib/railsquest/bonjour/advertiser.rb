@@ -4,10 +4,12 @@ class Railsquest::Bonjour::Advertiser
   def initialize
     @services = []
   end
+
   def go!
     register_app
     register_quests
   end
+
   private
     def register_app
       STDOUT.puts "Registering #{Railsquest.web_uri}"
@@ -19,6 +21,7 @@ class Railsquest::Bonjour::Advertiser
       tr["version"] = Railsquest::VERSION
       DNSSD.register("#{Railsquest.config.name}'s railsquest", "_http._tcp,_railsquest", nil, Railsquest.web_port, tr)
     end
+
     def register_quests
       loop do
         stop_old_services
@@ -26,6 +29,7 @@ class Railsquest::Bonjour::Advertiser
         sleep(1)
       end
     end
+
     def stop_old_services
       old_services.each do |old_service|
         STDOUT.puts "Unregistering #{old_service.quest.uri}"
@@ -33,9 +37,11 @@ class Railsquest::Bonjour::Advertiser
         @services.delete(old_service)
       end
     end
+
     def old_services
       @services.reject {|s| Railsquest.quests.include?(s.quest)}
     end
+
     def register_new_quests
       new_quests.each do |new_quest|
         STDOUT.puts "Registering #{new_quest.uri}"
@@ -53,6 +59,7 @@ class Railsquest::Bonjour::Advertiser
         @services << service
       end
     end
+
     def new_quests
       Railsquest.quests.select {|quest| !@services.any? {|s| s.quest == quest } }
     end

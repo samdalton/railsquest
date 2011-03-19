@@ -1,5 +1,4 @@
-module Railsquest::Bonjour
-class QuestBrowser
+class Railsquest::Bonjour::QuestBrowser
 
   def initialize
     @browser = Browser.new('_git._tcp,_railsquest')
@@ -32,5 +31,4 @@ class QuestBrowser
     quests.select {|r| r.person == person}
   end
   
-end
 end
