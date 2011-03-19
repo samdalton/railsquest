@@ -54,7 +54,7 @@ get '/' do
    redirect '/start' 
 end
 
-get "/:id" do
+get "/:hostname" do
   @my_quests     = Railsquest.quests
   @my_badges = Railsquest.badges
   @my_quest      = false
