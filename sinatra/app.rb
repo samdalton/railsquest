@@ -96,6 +96,7 @@ end
 
 post "/verify" do
    signature = params[:signature] 
+   require 'digest/sha1'
    checksum = Digest::SHA1.hexdigest params[:hostname] + params[:quest_name] + Railsquest.host_name + Railsquest::Quest.for_name(params[:quest_name]).secret
     json signature == checksum
 end
