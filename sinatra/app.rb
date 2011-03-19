@@ -59,7 +59,7 @@ get "/:id" do
   @my_badges = Railsquest.badges
   @my_quest      = false
   @other_quests_by_name = quest_browser.other_quests
-  @all_quests = @my_quests + @other_quests_by_name
+  @all_quests = @other_quests_by_name
   @people              = railsquest_browser.other_railsquests
   
   @adventurer = params[:id] if params[:id]
@@ -79,15 +79,17 @@ get "/:quest.json" do
 end    
   
 post "/submit" do
+    #todo should only come from localhost
     puts params
-    if params[:success] == "true"
-        RestClient.get 'http://' + params[:user_id] + ':' + Railsquest.web_port.to_s + '/success/' + params[:quest_name]            
-    end
-    json true
+    require 'digest/sha1'
+    signature = Digest::SHA1.hexdigest params[:hostname] + params[:quest_name] + Railsquest.host_name + Railsquest::Quest.for_name(params[:quest_name]).secret
+    
+    RestClient.post 'http://' + params[:hostname] + ':' + Railsquest.web_port.to_s + '/success', { :signature => signature, :quest_name => params[:quest_name] }         
+    
+    redirect '/' + params[:hostname]
 end
 
-get "/success/:quest_name" do
+post "/success" do
    b = Railsquest::Badge.for_name(params[:quest_name])
-   b.init!
-   redirect '/'
+   b.init!(params[:signature])
 end

@@ -1,10 +1,13 @@
 require 'grit'
 require 'pathname'
+require 'json'
 
 module Railsquest
   class Quest
       
       attr_accessor :name, :port
+      
+      attr_reader :secret
       
     def self.for_name(name)
         n = name.gsub(' ', '_')
@@ -28,11 +31,18 @@ module Railsquest
     end
     
     def init!
-      Dir.chdir(Railsquest.quests_path) { `echo #{port} >> #{path}` }
+        secret = `uuidgen`.strip
+        contents =  '{\"secret\" : \"' + secret + '\", \"port\" : ' + port +  '}'
+        puts contents
+        Dir.chdir(Railsquest.quests_path) { `echo "#{contents}" >> #{path}` }
     end
     
     def uri
-        Railsquest.git_uri.gsub(/\/$/, '') + ':' + File.open(path) { |f| f.gets }
+        Railsquest.git_uri.gsub(/\/$/, '') + ':' + File.open(path) { |f| JSON.parse(f.gets)["port"].to_s } 
+    end
+    
+    def secret
+        File.open(path) { |f| JSON.parse(f.gets)["secret"] } 
     end
     
     def name
