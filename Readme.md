@@ -104,6 +104,8 @@ Contributors
 * [Sam Dalton](http://github.com/samdalton/)
 * [Michael Dowse](http://michaeldowse.name/)
 * [Clifford Heath](http://dataconstellation.com/)
+* [Eaden McKee](@eadz)
+* [Cameron Walsh]
 
 With blithe cribbage from bananajour by...
 * [Tim Lucas](http://www.toolmantim.com)
